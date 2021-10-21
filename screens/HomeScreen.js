@@ -9,9 +9,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { SliderBox } from "react-native-image-slider-box";
+// import { SliderBox } from "react-native-image-slider-box";
 import Card from "../components/Card";
 import data from "../const/data";
+import SliderBox from "../components/SliderBox";
 // https://ctxt.io/2/AABg6Fi7Eg
 import GlobalStyles from "../styles/GlobalStyles";
 import List from "../components/List";
@@ -56,10 +57,11 @@ const HomeScreen = ({ navigation }) => {
           documentaryMoviesData,
         ]) => {
           const moviesImagesArray = [];
-          upcomingMoviesData.forEach((movie) => {
-            moviesImagesArray.push(
-              "https://image.tmdb.org/t/p/w500" + movie.poster_path
-            );
+          upcomingMoviesData.forEach((movie, index) => {
+            moviesImagesArray.push({
+              id: index,
+              image: "https://image.tmdb.org/t/p/w500" + movie.poster_path,
+            });
           });
 
           setMoviesImages(moviesImagesArray);
@@ -82,13 +84,7 @@ const HomeScreen = ({ navigation }) => {
       {loaded && !error && (
         <ScrollView>
           {moviesImages && (
-            <View>
-              {/*<SliderBox 
-                            images={moviesImages}
-                            sliderBoxHeight={dimentions.height / 1.5}
-                            autoplay={true}
-                            circleLoop={true} /> */}
-            </View>
+            <View>{<SliderBox slideList={moviesImages} />}</View>
           )}
         </ScrollView>
       )}
