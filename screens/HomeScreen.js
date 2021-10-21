@@ -12,7 +12,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 // import { SliderBox } from "react-native-image-slider-box";
 import Card from "../components/Card";
 import data from "../const/data";
-import SliderBox from "../components/SliderBox";
+//import SliderBox from "../components/SliderBox";
 // https://ctxt.io/2/AABg6Fi7Eg
 import GlobalStyles from "../styles/GlobalStyles";
 import List from "../components/List";
@@ -23,6 +23,7 @@ import {
   getFamilyMovies,
   getDocumentaryMovies,
 } from "../services/services";
+import Error from "../components/Error";
 
 const dimentions = Dimensions.get("screen");
 
@@ -80,14 +81,16 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      {loaded && !error && (
-        <ScrollView>
+    <>
+      {loaded &&
+        !error &&
+        {
+          /*<ScrollView>
           {moviesImages && (
             <View>{<SliderBox slideList={moviesImages} />}</View>
           )}
-        </ScrollView>
-      )}
+          </ScrollView> */
+        }}
       {/* Popular Movies */}
       {popularMovies && (
         <View style={styles.carousel}>
@@ -98,7 +101,7 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       )}
-      {/* Popular TV Shows */}
+      {/* Popular TV Shows 
       {popularTv && (
         <View style={styles.carousel}>
           <List
@@ -107,8 +110,8 @@ const HomeScreen = ({ navigation }) => {
             content={popularTv}
           />
         </View>
-      )}
-      {/* Family Movies */}
+      )}*/}
+      {/* Family Movies 
       {familyMovies && (
         <View style={styles.carousel}>
           <List
@@ -117,8 +120,8 @@ const HomeScreen = ({ navigation }) => {
             content={familyMovies}
           />
         </View>
-      )}
-      {/* Documentary Movies */}
+      )}*/}
+      {/* Documentary Movies 
       {documentaryMovies && (
         <View style={styles.carousel}>
           <List
@@ -127,10 +130,10 @@ const HomeScreen = ({ navigation }) => {
             content={documentaryMovies}
           />
         </View>
-      )}
+      )}*/}
       {!loaded && <ActivityIndicator size="large" />}
       {error && <Error />}
-    </SafeAreaView>
+    </>
   );
 };
 

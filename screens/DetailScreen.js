@@ -8,7 +8,7 @@ import {
   Modal,
   Pressable,
   TouchableHighlight,
-  Platform
+  Platform,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import data from "../const/data";
@@ -16,6 +16,7 @@ import StarRating from "react-native-star-rating";
 import dateFormat from "dateformat";
 import PlayButton from "../components/PlayButton";
 import Videos from "../components/Videos";
+import { connect } from "react-redux";
 
 const height = Dimensions.get("screen").height;
 
@@ -114,10 +115,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   playButton: {
-    position: 'absolute',
+    position: "absolute",
     top: -25,
-    right: 20
-  }
+    right: 20,
+  },
 });
 
-export default DetailScreen;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(DetailScreen);
