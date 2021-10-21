@@ -11,13 +11,15 @@ import {
   Platform,
   Button,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import data from "../const/data";
 import StarRating from "react-native-star-rating";
 import dateFormat from "dateformat";
 import PlayButton from "../components/PlayButton";
 import Videos from "../components/Videos";
 import { connect } from "react-redux";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useSelector, useDispatch } from "react-redux";
 
 const height = Dimensions.get("screen").height;
 
@@ -25,6 +27,9 @@ function DetailScreen({ route, navigation, film }) {
   const movieId = route.params.movieId;
   const [movieDetail, setMovieDetail] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+
+  const favoriteFilm = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setMovieDetail(data.filter((item) => item.id === movieId)[0]);
@@ -38,6 +43,15 @@ function DetailScreen({ route, navigation, film }) {
     const action = { type: "TOGGLE_FAVORITE", value: film };
     dispatch(action);
     console.log(film);
+  };
+
+  const displayFavoriteImage = () => {
+    const fav = '<MaterialCommunityIcons name="heart" color="#3333" size=30 />';
+    const nofav =
+      '<MaterialCommunityIcons name="heart-outline" color="#3333" size=30 />';
+    const condition =
+      favoriteFilm.findIndex((item) => item.id === film.id) !== -1;
+    return condition ? fav : nofav;
   };
 
   return (
@@ -64,7 +78,22 @@ function DetailScreen({ route, navigation, film }) {
               fullStarColor={"gold"}
             />
             <Text style={styles.overview}>{movieDetail.overview}</Text>
-            <Button title={"Favoris"} onPress={() => toggleFavorite} />
+            {/*<Button title={"Favoris"} onPress={() => toggleFavorite} />*/}
+
+            <TouchableOpacity
+              style={styles.favorite_container}
+              onPress={() => toggleFavorite}
+            >
+              {favoriteFilm.findIndex((item) => item.id === film.id) !== -1} ?
+              {
+                "<MaterialCommunityIcons name='heart' color='#3333' size='30' /> "
+              }
+              :
+              {
+                "<MaterialCommunityIcons name='heart-outline' color='#3333' size='30' /> "
+              }
+              {displayFavoriteImage}
+            </TouchableOpacity>
             <Text style={styles.release}>
               {"Date de sortie : " +
                 dateFormat(movieDetail.release_date, "dd/mm/yyyy")}
@@ -126,6 +155,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -25,
     right: 20,
+  },
+  favorite_container: {
+    alignItems: "center", // Alignement des components enfants sur l'axe secondaire, X ici
   },
 });
 
