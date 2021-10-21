@@ -8,6 +8,7 @@ import {
   Modal,
   Pressable,
   TouchableHighlight,
+  Platform
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import data from "../const/data";
@@ -112,6 +113,11 @@ const styles = StyleSheet.create({
   release: {
     fontWeight: "bold",
   },
+  playButton: {
+    position: 'absolute',
+    top: -25,
+    right: 20
+  }
 });
 
 export default DetailScreen;
