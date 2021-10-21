@@ -58,12 +58,12 @@ const HomeScreen = ({ navigation }) => {
           documentaryMoviesData,
         ]) => {
           const moviesImagesArray = [];
-          upcomingMoviesData.forEach((movie, index) => {
+          /* upcomingMoviesData.forEach((movie, index) => {
             moviesImagesArray.push({
               id: index,
               image: "https://image.tmdb.org/t/p/w500" + movie.poster_path,
             });
-          });
+          }); */
 
           setMoviesImages(moviesImagesArray);
           setPopularMovies(popularMoviesData);
@@ -82,15 +82,6 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <>
-      {loaded &&
-        !error &&
-        {
-          /*<ScrollView>
-          {moviesImages && (
-            <View>{<SliderBox slideList={moviesImages} />}</View>
-          )}
-          </ScrollView> */
-        }}
       {/* Popular Movies */}
       {popularMovies && (
         <View style={styles.carousel}>
@@ -101,36 +92,7 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       )}
-      {/* Popular TV Shows 
-      {popularTv && (
-        <View style={styles.carousel}>
-          <List
-            navigation={navigation}
-            title={"Popular TV Shows"}
-            content={popularTv}
-          />
-        </View>
-      )}*/}
-      {/* Family Movies 
-      {familyMovies && (
-        <View style={styles.carousel}>
-          <List
-            navigation={navigation}
-            title={"Family Movies"}
-            content={familyMovies}
-          />
-        </View>
-      )}*/}
-      {/* Documentary Movies 
-      {documentaryMovies && (
-        <View style={styles.carousel}>
-          <List
-            navigation={navigation}
-            title={"Documentary Movies"}
-            content={documentaryMovies}
-          />
-        </View>
-      )}*/}
+
       {!loaded && <ActivityIndicator size="large" />}
       {error && <Error />}
     </>

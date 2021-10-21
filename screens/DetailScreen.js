@@ -9,6 +9,7 @@ import {
   Pressable,
   TouchableHighlight,
   Platform,
+  Button,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import data from "../const/data";
@@ -20,7 +21,7 @@ import { connect } from "react-redux";
 
 const height = Dimensions.get("screen").height;
 
-const DetailScreen = ({ route, navigation }) => {
+function DetailScreen({ route, navigation, film }) {
   const movieId = route.params.movieId;
   const [movieDetail, setMovieDetail] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +32,12 @@ const DetailScreen = ({ route, navigation }) => {
 
   const videoShown = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const toggleFavorite = () => {
+    const action = { type: "TOGGLE_FAVORITE", value: film };
+    dispatch(action);
+    console.log(film);
   };
 
   return (
@@ -57,6 +64,7 @@ const DetailScreen = ({ route, navigation }) => {
               fullStarColor={"gold"}
             />
             <Text style={styles.overview}>{movieDetail.overview}</Text>
+            <Button title={"Favoris"} onPress={() => toggleFavorite} />
             <Text style={styles.release}>
               {"Date de sortie : " +
                 dateFormat(movieDetail.release_date, "dd/mm/yyyy")}
@@ -91,7 +99,7 @@ const DetailScreen = ({ route, navigation }) => {
       </View>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -121,8 +129,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
-  return state;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: (action) => {
+      dispatch(action);
+    },
+  };
 };
 
-export default connect(mapStateToProps)(DetailScreen);
+const mapStateToProps = (state) => {
+  return {
+    favoriteFilm: state.favoriteFilm,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailScreen);
